@@ -1,0 +1,134 @@
+type Query {
+  """Returns all folders."""
+  folders: [Folder!]!
+
+  """Returns a single folder by ID, including its nested bookmarks."""
+  folder(id: ID!): Folder
+
+  """
+  Returns bookmarks with optional filtering and cursor-based pagination.
+  Ordered by createdAt DESC, id DESC (newest first).
+  """
+  bookmarks(
+    """Filter by folder ID."""
+    folderId: ID
+    """Substring match against bookmark title (case-insensitive)."""
+    search: String
+    """Number of bookmarks to return (default: 20, max: 100)."""
+    take: Int = 20
+    """Opaque cursor for pagination. Omit for the first page."""
+    cursor: String
+  ): BookmarkConnection!
+}
+
+type Mutation {
+  """Creates a new folder."""
+  createFolder(input: CreateFolderInput!): Folder!
+
+  """
+  Creates a new bookmark. Returns the created bookmark and, if a bookmark
+  with the same normalized URL already exists in the same folder, a reference
+  to that existing bookmark as `duplicateOf` (soft warning, not a hard error).
+  """
+  createBookmark(input: CreateBookmarkInput!): CreateBookmarkPayload!
+
+  """Updates an existing bookmark's title, URL, and/or tags."""
+  updateBookmark(id: ID!, input: UpdateBookmarkInput!): Bookmark!
+
+  """Deletes a bookmark and returns the deleted bookmark data."""
+  deleteBookmark(id: ID!): Bookmark!
+
+  """Moves a bookmark to a different folder."""
+  moveBookmark(id: ID!, folderId: ID!): Bookmark!
+}
+
+# ────────────────────────────────────────────────
+# Types
+# ────────────────────────────────────────────────
+
+type Folder {
+  id: ID!
+  name: String!
+  createdAt: String!
+  bookmarks: [Bookmark!]!
+  """Computed health metrics for this folder."""
+  health: FolderHealth!
+}
+
+type Bookmark {
+  id: ID!
+  title: String!
+  url: String!
+  tags: [String!]!
+  folderId: ID!
+  folder: Folder!
+  createdAt: String!
+  updatedAt: String!
+}
+
+type FolderHealth {
+  """Total number of bookmarks in this folder."""
+  totalBookmarks: Int!
+  """Number of normalized URLs that appear more than once in this folder."""
+  duplicateCount: Int!
+  """Number of bookmarks not updated in the last 30 days."""
+  staleCount: Int!
+}
+
+# ────────────────────────────────────────────────
+# Connection / Pagination
+# ────────────────────────────────────────────────
+
+type BookmarkConnection {
+  edges: [BookmarkEdge!]!
+  pageInfo: PageInfo!
+  """Total count of bookmarks matching the filter (before pagination)."""
+  totalCount: Int!
+}
+
+type BookmarkEdge {
+  """Opaque cursor for this edge."""
+  cursor: String!
+  node: Bookmark!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  """Cursor of the last edge, or null if no edges."""
+  endCursor: String
+}
+
+# ────────────────────────────────────────────────
+# Payloads
+# ────────────────────────────────────────────────
+
+type CreateBookmarkPayload {
+  """The newly created bookmark."""
+  bookmark: Bookmark!
+  """
+  If a bookmark with the same normalized URL already exists in the same folder,
+  this field contains that existing bookmark. This is a soft warning, not a hard error.
+  """
+  duplicateOf: Bookmark
+}
+
+# ────────────────────────────────────────────────
+# Inputs
+# ────────────────────────────────────────────────
+
+input CreateFolderInput {
+  name: String!
+}
+
+input CreateBookmarkInput {
+  title: String!
+  url: String!
+  tags: [String!]
+  folderId: ID!
+}
+
+input UpdateBookmarkInput {
+  title: String
+  url: String
+  tags: [String!]
+}
