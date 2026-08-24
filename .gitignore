@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.env
+.env.test
+*.log
+bun.lockb
+
+# Prisma
+src/generated/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
