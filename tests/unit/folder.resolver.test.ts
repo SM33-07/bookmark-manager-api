@@ -14,12 +14,12 @@ import type { GraphQLContext } from "../../src/context.js";
 function createMockPrisma() {
   return {
     folder: {
-      findMany: mock(() => Promise.resolve([])),
-      findUnique: mock(() => Promise.resolve(null)),
-      create: mock(() => Promise.resolve(null)),
+      findMany: mock((..._args: unknown[]) => Promise.resolve([] as unknown[])),
+      findUnique: mock((..._args: unknown[]) => Promise.resolve(null as unknown)),
+      create: mock((..._args: unknown[]) => Promise.resolve(null as unknown)),
     },
     bookmark: {
-      findMany: mock(() => Promise.resolve([])),
+      findMany: mock((..._args: unknown[]) => Promise.resolve([] as unknown[])),
       count: mock(() => Promise.resolve(0)),
     },
   };
@@ -172,3 +172,4 @@ describe("Folder Mutation Resolvers", () => {
     });
   });
 });
+

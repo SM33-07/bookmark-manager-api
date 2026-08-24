@@ -6,7 +6,7 @@ import type { GraphQLContext } from "../context.js";
 import { validateFolderName } from "../utils/validation.js";
 import * as folderService from "../services/folder.service.js";
 
-interface CreateFolderInput {
+export interface CreateFolderInput {
   name: string;
 }
 
@@ -43,3 +43,4 @@ export const folderResolvers = {
     },
   },
 };
+

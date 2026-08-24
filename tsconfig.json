@@ -19,7 +19,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": ".",
-    "types": ["bun-types"],
+    "types": ["bun"],
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -27,3 +27,5 @@
   "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "dist", "prisma"]
 }
+
+

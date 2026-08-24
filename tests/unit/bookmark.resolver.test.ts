@@ -19,16 +19,16 @@ import type { GraphQLContext } from "../../src/context.js";
 function createMockPrisma() {
   return {
     folder: {
-      findUnique: mock(() => Promise.resolve({ id: "folder-1" })),
+      findUnique: mock((..._args: unknown[]) => Promise.resolve({ id: "folder-1" } as unknown)),
     },
     bookmark: {
-      findFirst: mock(() => Promise.resolve(null)),
-      findUnique: mock(() => Promise.resolve(null)),
-      findMany: mock(() => Promise.resolve([])),
-      create: mock(() => Promise.resolve(null)),
-      update: mock(() => Promise.resolve(null)),
-      delete: mock(() => Promise.resolve(null)),
-      count: mock(() => Promise.resolve(0)),
+      findFirst: mock((..._args: unknown[]) => Promise.resolve(null as unknown)),
+      findUnique: mock((..._args: unknown[]) => Promise.resolve(null as unknown)),
+      findMany: mock((..._args: unknown[]) => Promise.resolve([] as unknown[])),
+      create: mock((..._args: unknown[]) => Promise.resolve(null as unknown)),
+      update: mock((..._args: unknown[]) => Promise.resolve(null as unknown)),
+      delete: mock((..._args: unknown[]) => Promise.resolve(null as unknown)),
+      count: mock((..._args: unknown[]) => Promise.resolve(0)),
     },
   };
 }
@@ -433,3 +433,4 @@ describe("Bookmark Query Resolvers", () => {
     });
   });
 });
+

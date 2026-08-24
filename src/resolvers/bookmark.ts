@@ -6,20 +6,20 @@ import type { GraphQLContext } from "../context.js";
 import { validateTitle, validateUrl, validateTake } from "../utils/validation.js";
 import * as bookmarkService from "../services/bookmark.service.js";
 
-interface CreateBookmarkInput {
+export interface CreateBookmarkInput {
   title: string;
   url: string;
   tags?: string[] | null;
   folderId: string;
 }
 
-interface UpdateBookmarkInput {
+export interface UpdateBookmarkInput {
   title?: string | null;
   url?: string | null;
   tags?: string[] | null;
 }
 
-interface BookmarksArgs {
+export interface BookmarksArgs {
   folderId?: string | null;
   search?: string | null;
   take?: number | null;
@@ -125,3 +125,4 @@ export const bookmarkResolvers = {
     },
   },
 };
+
