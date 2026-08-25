@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Folder {
+  id        String     @id @default(cuid())
+  name      String
+  createdAt DateTime   @default(now()) @map("created_at")
+  bookmarks Bookmark[]
+
+  @@map("folders")
+}
+
+model Bookmark {
+  id            String   @id @default(cuid())
+  title         String
+  url           String
+  /// Stored normalized form for duplicate detection.
+  /// Indexed but intentionally NOT a unique constraint — duplicate detection
+  /// is a soft warning (CreateBookmarkPayload.duplicateOf), not a hard rule.
+  /// See README § Tradeoffs for rationale.
+  normalizedUrl String   @map("normalized_url")
+  tags          String[] @default([])
+  folderId      String   @map("folder_id")
+  folder        Folder   @relation(fields: [folderId], references: [id], onDelete: Restrict)
+  createdAt     DateTime @default(now()) @map("created_at")
+  /// Added beyond original spec to support staleness detection in Folder.health.
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([folderId])
+  @@index([normalizedUrl])
+  @@index([title])
+  @@index([createdAt])
+  @@map("bookmarks")
+}

@@ -1,0 +1,33 @@
+{
+  "name": "bookmark-manager",
+  "version": "1.0.0",
+  "description": "Bookmark Manager GraphQL API — Bun + TypeScript + GraphQL Yoga + Prisma + PostgreSQL",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "gendb": "bunx prisma migrate dev",
+    "generate": "bunx prisma generate",
+    "migrate:deploy": "bunx prisma migrate deploy",
+    "test": "bun test",
+    "test:unit": "bun test tests/unit",
+    "test:integration": "bun test tests/integration",
+    "lint": "bunx eslint src/ tests/",
+    "typecheck": "bunx tsc --noEmit",
+    "sanity": "bun run lint && bun run typecheck && bun run test",
+    "studio": "bunx prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.8.0",
+    "graphql": "^16.10.0",
+    "graphql-yoga": "^5.10.0",
+    "graphql-scalars": "^1.24.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.0",
+    "prisma": "^6.8.0",
+    "typescript": "^5.7.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^9.0.0"
+  }
+}
