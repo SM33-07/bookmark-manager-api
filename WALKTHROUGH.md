@@ -297,7 +297,7 @@ The test suite is split into two distinct categories with different jobs:
 
 **Integration tests** (1 file, 11 test cases) run against a real PostgreSQL 16 instance via Docker Compose. They call service functions directly with a real Prisma client and assert against actual query results. These answer a different question: "does the whole stack work correctly when Prisma generates real SQL, PostgreSQL processes real data, and indexes/constraints are enforced?"
 
-The total across both suites is **86 test cases with 186 assertions**.
+The total across both suites is **86 test cases with 170 assertions**.
 
 Three specific tests I'm proud of because they catch non-obvious bugs:
 
@@ -359,13 +359,14 @@ Ordered by what I'd actually tackle first:
 
 ## 10. Closing
 
-The repo is at [github.com/SM33-07/bookmark-manager-api](https://github.com/SM33-07/bookmark-manager-api). The PR containing the full implementation is linked from the repo's pull request tab. All 86 tests pass (75 unit + 11 integration), lint and typecheck are clean, and the Docker setup is verified end-to-end from a clean clone.
+The repo is at [github.com/SM33-07/bookmark-manager-api](https://github.com/SM33-07/bookmark-manager-api). The PR containing the full implementation is available directly at [pull/1](https://github.com/SM33-07/bookmark-manager-api/pull/1). All 86 tests pass (75 unit + 11 integration), lint and typecheck are clean, and the Docker setup is verified end-to-end from a clean clone.
 
 ---
 
 ## Verification
 
-**Repo:** `https://github.com/SM33-07/bookmark-manager-api`
+**Repo:** `https://github.com/SM33-07/bookmark-manager-api`  
+**PR:** `https://github.com/SM33-07/bookmark-manager-api/pull/1`
 
 To reproduce the full test run from a clean clone:
 
